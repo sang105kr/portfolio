@@ -1,0 +1,9 @@
+@charset "UTF-8";
+main .content { display:flex; justify-content: center; padding:30px 30px; }
+main .table-responsive { width: 100%; }
+main table thead { text-align:center;}
+main table tbody td:nth-child(1),
+main table tbody td:nth-child(6){text-align: right;} 
+main .find {
+	display:flex; justify-content:center; margin:1rem 0;
+}

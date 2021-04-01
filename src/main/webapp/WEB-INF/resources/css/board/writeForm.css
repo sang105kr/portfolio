@@ -1,0 +1,20 @@
+@charset "UTF-8";
+main .content { display:flex; justify-content: center; padding:30px 30px; }
+main form { width: 100%; }
+main form legend#title { text-align:center; }
+main form ul{ display:grid; grid-template-columns: 15% 85%; }
+main form ul > li { text-align: left; padding:3px 0; }
+main form ul > li select,
+main form ul > li input,
+main form ul > li textArea { width: 100%; }
+main form ul > li textArea { height:10em; }
+main form ul > li:nth-of-type(3n){ grid-column: 2 / 3; line-height:0.5;}
+main form ul > li:nth-last-of-type(1){ display:flex; justify-content: flex-end; }
+main form ul > li:nth-last-of-type(1) button { margin-left:3px; }
+main form .svr_msg { font-size: 0.8rem; color:red; font-weight: bolder; }
+/*ck editor*/
+main form	.ck.ck-editor__editable{ min-height:300px; }
+
+/*word count*/
+main form #word-count .ck.ck-word-count {display:flex; justify-content: flex-end;}
+main form #word-count div {margin-left:2rem;}

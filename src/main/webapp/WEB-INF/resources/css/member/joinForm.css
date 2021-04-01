@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* 	* {outline:1px solid red;}  */
+	.container .content{
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		padding:50px;
+	}
+	.container .content #joinForm {
+		width:200px;
+	}
+	.container .content #joinForm .title{
+		text-align: center;
+	}
+
+	.container .content #joinForm input,
+	.container .content #joinForm select {
+		box-sizing: border-box;
+		width:100%;
+	}
+	.container .content #joinForm input[type=radio],
+	.container .content #joinForm input[type=checkbox] {
+		width:auto;
+	}
+	.container .content #joinForm input[type=submit]{
+		background-color: lightgreen;
+		border:none;
+		outline:none;
+	}
+	.container .content #joinForm .hobby {
+		display:grid;
+		grid-template-columns: repeat(3,1fr); 
+	}
+	.errmsg {
+		color:red;
+		font-size: 0.7rem;
+		font-weight: bold;
+	}
+
+
+
+
+
+

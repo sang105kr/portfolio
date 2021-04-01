@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- mybatis에서 null값 허용 세팅 시작-->
+	<settings>
+	 <setting name="cacheEnabled" 	 value="false"/>
+	 <setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<!-- mapper파일에서 parameterType 풀네임을 간단한 별칭으로 대체해서 사용-->
+	<typeAliases>
+		<typeAlias type="com.kh.portfolio.board.vo.RboardVO" alias="RboardVO"/>
+		<typeAlias type="com.kh.portfolio.board.vo.VoteVO" alias="VoteVO"/>
+		<typeAlias type="com.kh.portfolio.board.vo.VoteCntVO" alias="VoteCntVO"/>
+	</typeAliases>
+</configuration>

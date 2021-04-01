@@ -1,0 +1,193 @@
+* { 
+   /* outline:1px solid red; */
+   margin:0; padding:0; 
+}
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+a {
+  text-decoration: none;
+  color:inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+/* common */
+.container{
+  width:800px; margin:0; padding:0;
+	margin:0 auto;
+  /*text-align: center;*/
+}
+/* upper most */
+.uppermost{
+  background-color:#000a12;
+  color:#fff;
+  font-weight: bold;
+	position:sticky; top:0px; z-index:100;
+}
+.container-um{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:#000a12;
+  height:30px;
+}
+.container-um .logo,
+.container-um .menu{
+  display:flex;
+}
+.container-um .logo .fa-coffee{
+  margin-right:5px;
+  color:#ff7043;
+}
+.container-um .logo #logo-txt{
+  color:#eceff1;
+}
+.container-um .menu li{
+  margin-left:5px;
+}
+/* header */
+header{
+	/*position:sticky; top:30px; z-index:100;*/
+  background-color:#bef67a;
+}
+.container-h{
+	/*
+  background-color: #8bc34a;
+  background-image: url("https://cdn.pixabay.com/photo/2015/02/05/01/33/valentines-day-624440_960_720.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 250px;
+  position: relative;
+*/
+}
+@keyframes anim_copyright {
+	0% {
+		transform:scale(0.1) ;
+	}
+	100% {
+		transform:scale(1) rotate(350deg);
+		
+	}
+}
+header .copyright{
+  position:absolute;
+  top:60px;
+  left:5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  transform: rotate(-10deg);
+  color:#607d8b;
+  box-shadow: 5px 5px 5px 2px;
+  box-shadow: inset 5px 5px 5px 2px gray;
+  animation-name:anim_copyright;
+  animation-duration:2s;
+  animation-iteration-count: 1;
+  animation-direction:alternate;
+  animation-timing-function: liner;
+}
+header .copyright:hover {
+  transform: rotate(-5deg);
+}
+/* nav */
+nav{
+  position:sticky; top:30px; z-index:200;
+  background-color: #000a12;
+}
+.container-n{
+  background-color: #000a12;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  color:#eceff1;
+  /* font-weight: bold; */
+}
+.container-n ul.depth1{
+  display:flex;
+  justify-content: center;
+}
+.container-n ul.depth1 > li,
+.container-n ul.depth2 > li{
+  width:6em;
+  text-align: center;
+  padding:5px;
+}
+.container-n ul.depth1 > li {
+  position:relative;
+  border-radius: 5px;
+}
+.container-n ul.depth1 > li:hover ul.depth2{
+  display:block;
+}
+.container-n ul.depth1 ul.depth2{
+  display: none;
+  position:absolute;
+  background-color: #212121;
+  box-shadow: 2px 2px 2px 2px rgba(193, 193, 201, 0.2);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  left:0;
+  transition: all 2s;
+}  
+.container-n ul.depth2 li{
+  margin:7px 0px;
+}
+.container-n ul.depth1 li:hover,
+.container-n ul.depth2 li:hover{
+  background-color: #212121;
+}
+
+/* main */
+main{
+  background-color: #ffc947;
+}
+.container-m{
+  /* height:50vh; */
+  display:flex;
+  /* outline: 3px solid red; */
+/*   background-color: #ff9800; */
+  overflow: hidden;
+	padding:0px;
+}
+.container-m section.s1{
+  flex:2;
+  background-color: #304ffe;
+}
+.container-m section.s2{
+  flex:2;
+  background-color: #00bfa5;
+}
+.container-m section.s3{
+  flex:1;
+  background-color: #795548;
+}
+
+/* footer menu */
+.footermenu{
+  background-color: #fff;
+}
+.container-fm{
+  background-color: #9e9e9e;
+}
+/* footer */
+footer{
+  background-color: #fff;
+}
+.container-f{
+  background-color: #000a12;
+  height:70px; line-height: 70px; text-align: center; 
+  color:#eceff1; font-weight: bold; font-size:0.8rem;  
+}
+
+/* 배경색제거 */
+header,nav,main {
+  background-color: transparent;
+}
+
+/* clearfix */
+.clearfix {
+  clear:both; /*float의 왼쪽,오른쪽흐름을 차단*/
+}

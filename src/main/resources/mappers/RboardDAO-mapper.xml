@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.RboardDAO-mapper">
+	<!-- 댓글 작성 -->
+	<insert id="write" parameterType="RboardVO">
+	  insert into rboard(
+	  	rnum,
+	  	bnum,
+	  	rid,
+	  	rnickname,
+	  	rcontent,
+	  	rgroup,
+	  	rstep,
+	  	rindent
+	  )
+	  values(
+	  	rboard_rnum_seq.nextval,
+	  	#{bnum},
+	  	#{rid},
+	  	#{rnickname},
+	  	#{rcontent},
+	  	rboard_rnum_seq.currval,
+	  	0,
+	  	0	  	
+	  )
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	 <update id="modify" parameterType="RboardVO">
+	   update rboard
+	      set rcontent = #{rcontent},
+	          rudate = systimestamp
+	 		where rnum = #{rnum}
+	 		  and rid  = #{rid}	 		  
+	 </update>		
+	
+	<!-- 댓글 삭제 -->
+	<delete id="delete" parameterType="long">
+	
+		delete from rboard where rnum = #{rnum}
+	
+	</delete>
+	
+	<!-- 댓글조회 -->
+	<select id="replyView" parameterType="long" resultType="RboardVO">
+		select
+		   t1.rnum,
+		   t1.bnum,
+		   t1.rid, t1.rnickname,
+		   t1.rcontent,
+		   t1.rcdate, t1.rudate,
+		   t1.rgroup, t1.rstep, t1.rindent,
+		   t1.prnum,  t1.prid,  t1.prnickname		
+			from rboard t1
+		 where rnum = #{rnum}	
+	</select>
+	
+	<!-- 댓글목록 -->
+	<select id="list" parameterType="map" resultType="RboardVO">
+		<![CDATA[	
+			select 
+			   t1.rnum,
+			   t1.bnum,
+			   t1.rid, t1.rnickname,
+			   t1.rcontent,
+			   t1.rcdate, t1.rudate,
+			   t1.rgroup, t1.rstep, t1.rindent,
+			   t1.prnum,  t1.prid,  t1.prnickname,
+			   nvl(t2.good,0) rgood, nvl(t2.bad,0) rbad
+			 --  t1.pic, t1.ftype
+			  from
+			    (select *
+			       from(select row_number() over( order by rgroup desc,rstep asc ) as num,
+			                   t1.rnum,
+			                   t1.bnum,
+			                   t1.rid, t1.rnickname,
+			                   t1.rcontent,
+			                   t1.rcdate, t1.rudate,
+			                   t1.rgroup, t1.rstep, t1.rindent,
+			                   t1.prnum,  t1.prid,  t1.prnickname,
+			                   t3.pic, t3.ftype
+			              from rboard t1, board t2, member t3
+			             where t1.bnum = t2.bnum
+			               and t1.rid  = t3.member_id
+			               and t1.bnum = #{bnum}) t1
+			      where num between #{startRec} and #{endRec}) t1,
+			     (select rnum, 
+			            count(decode(vote,'GOOD',1)) good,
+			            count(decode(vote,'BAD',1))  bad
+			       from rboard_vote
+			      group by rnum) t2
+			  where t1.rnum = t2.rnum(+)
+		 ]]>		
+	</select>
+	
+	<!-- 대댓글 작성 -->
+	<insert id="reply" parameterType="RboardVO">
+	
+	  insert into rboard(
+	  	rnum,
+	  	bnum,
+	  	rid,
+	  	rnickname,
+	  	rcontent,
+	  	rgroup,
+	  	rstep,
+	  	rindent,
+	  	prnum, prid, prnickname
+	  )
+	  values(
+	  	rboard_rnum_seq.nextval,
+	  	#{bnum},
+	  	#{rid},
+	  	#{rnickname},
+	  	#{rcontent},
+	  	#{rgroup},
+	  	#{rstep} + 1,
+	  	#{rindent} + 1,
+	  	#{prnum}, #{prid}, #{prnickname}
+	  )	 	
+	</insert>
+	<!-- 이전댓글 step 업데이트 -->
+	<update id="updateStep" parameterType="map">
+		update rboard
+		   set rstep = rstep + 1
+     where rgroup = #{rgroup}
+       and rstep > #{rstep}	
+	</update>
+	
+	<!-- 댓글의 총 레코드수(페이지계산위함) -->
+	<select id="totalRecordCount" parameterType="long" resultType="int">
+		
+		select count(rnum) cnt
+		  from rboard t1, board t2
+     where t1.bnum = t2.bnum
+       and t1.bnum = #{bnum}
+     	
+	</select>
+	<!-- 호감,비호감 -->
+	<!-- 투표이력이 없으면 추가 있으면 변경 -->
+	<insert id="vote" parameterType="VoteVO">
+	<!-- CDATA: SQL내용에 <,>,특수문자를 XML파서에서 해석하지않고 문자열로 인식토록함. -->
+	<![CDATA[
+		merge into rboard_vote using dual
+		   on ( rnum = #{rnum} and bnum= #{bnum} and rid= #{rid} )
+		--키값이 존재하는경우   
+		when matched then
+		   update set vote = #{vote}, udate = systimestamp
+		--키값이 존재하지 않는경우   
+		when not matched then   
+		   insert (rnum,bnum,rid,vote)
+		   values (#{rnum}, #{bnum}, #{rid}, #{vote})
+	]]>
+	</insert>
+	
+	<select id="voteCnt" parameterType="long" resultType="VoteCntVO">
+		<![CDATA[	
+			-- 선호도 업데이트후 변경된 정보 읽어오기
+			select rnum, 
+	           count(decode(vote,'GOOD',1)) rgood,
+	           count(decode(vote,'BAD',1))  rbad
+	      from rboard_vote
+	     group by rnum
+	     having rnum = #{rnum}
+		]]>	
+	</select> 	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

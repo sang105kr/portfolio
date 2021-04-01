@@ -1,0 +1,43 @@
+@charset "utf-8";
+main .container-m .s1{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+}
+main .container-m .s1 #outMemberForm .title{
+	text-align: center;
+}
+main .container-m .s1 form {
+	width:200px;
+}
+main .container-m .s1 form ul input,
+main .container-m .s1 form ul button {
+	width:100%;
+}
+/* 확인버튼 */
+main .container-m .s1 form ul button#confirmBtn {
+	background-color: rgba(0,255,0,1);
+	border: none;
+	outline: none;
+}
+/* 취소버튼 */
+main .container-m .s1 form ul button#cancelBtn {
+	background-color: rgba(255,255,255,1);
+	border: none;
+	outline: none;		
+}
+input.errmsg::placeholder {
+	color:red;
+}
+/* 오류 메세지 */
+main .container-m .s1 form .svr_msg{
+	color:red;
+	font-weight:bold;
+	font-size:0.8rem;
+}
+
+
+
+
+

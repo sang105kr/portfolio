@@ -1,0 +1,25 @@
+@charset "utf-8";
+main div.wrap-findpw {
+	padding-left:0px;
+	display:grid;
+	height:100vh;
+	justify-content:center;
+	align-content: center; 
+}
+main div h3{
+	text-align: center;
+}
+main ul li {
+	display:grid;
+	grid-template-columns:1fr 2fr;
+	margin:3px 0;
+} 
+main ul li:nth-last-child(1),
+main ul li:nth-last-child(2) {
+	grid-template-columns:auto;
+} 
+
+
+
+
+
